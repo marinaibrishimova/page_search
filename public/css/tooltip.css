@@ -1,0 +1,13 @@
+.tooltip 
+{
+	display:none;
+	background:transparent url(/images/popup.png);
+	background-repeat:no-repeat;
+	font-size:12px;
+	height:73px;
+	width:300px;
+	padding:10px;
+	margin:16px 0 0 162px;
+	color:#fff;
+	line-height:16px;
+}
