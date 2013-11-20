@@ -1,4 +1,3 @@
-
 Copy, right? 2013 Marina Ibrishimova | Contact: marina@ibrius.net
 
 This file is part of Page Search.
@@ -6,17 +5,15 @@ This file is part of Page Search.
     Page Search is free software: you can redistribute it and/or modify
     it under the terms of the GNU Affero General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version. Cause I'm cool like that.
+    (at your option) any version, really. Cause I'm cool like that.
 
     Page Search is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE ESPECIALLY 
-    THE FRONT END STUFF BUT THIS STUFF AS WELL.  See the GNU Affero 
-    General Public License for more details.
+    THE FRONT END.  See the GNU Affero General Public License for more details.
 
     You should have received a copy of the GNU Affero General Public License
     along with Page Search.  If not, see <http://www.gnu.org/licenses/>.
-
 
 
 INSTRUCTIONS:
@@ -34,3 +31,25 @@ Note: This works well for pages with a small number of posts and it does not bre
 
 Also note: Currently there's no fancy "Did you mean" spellchecker but that could easily be modified by slapping a levenshtein() while searching recursively. 
 
+The key controllers are: 
+
+p4g3_srch_app/controllers/welcome.php   ---  canvas - default landing page
+
+p4g3_srch_app/controllers/tab.php       ---  tab - everything that goes after installing app to page
+
+Key models:
+
+this app doesn't talk to a database so no need for models, ye
+
+Key view files:
+
+p4g3_srch_app/views/welcome.php 	--- landing canvas view
+p4g3_srch_app/views/create.php 		--- landing tab view
+
+Key helper:
+
+p4g3_srch_app/helpers/facebook_helper.php --- where all search functions are at
+
+DEMO:
+https://apps.facebook.com/post-finder
+https://www.facebook.com/ibrius/app_384295561652134
