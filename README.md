@@ -1,4 +1,4 @@
-/**
+
 Copy, right? 2013 Marina Ibrishimova | Contact: marina@ibrius.net
 
 This file is part of Page Search.
@@ -17,9 +17,9 @@ This file is part of Page Search.
     You should have received a copy of the GNU Affero General Public License
     along with Page Search.  If not, see <http://www.gnu.org/licenses/>.
 
-**/
 
-INSTRUCTIONs:
+
+INSTRUCTIONS:
 
 To get started, you'll need to create an app on Facebook 
 
