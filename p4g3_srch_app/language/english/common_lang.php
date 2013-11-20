@@ -45,8 +45,7 @@ $lang['common_error_general']='<b style="font-size:18px;">Oops, there was an err
 It was caused by one of the following things:<br><br> 
 &bull; Your session has timed out, please reload the page.<br><br>
 &bull; You are not logged into Facebook, please sign into your Facebook account and try again.<br><br>
-&bull; You have removed the Welcome Timeline App from your app dashboard or blocked it from your privacy settings.<br><br>
+&bull; You have removed the app from your app dashboard or blocked it from your privacy settings.<br><br>
 &bull; You are not a page admin and are trying to access an admin only area.<br><br>';
- 
 
 ?>
