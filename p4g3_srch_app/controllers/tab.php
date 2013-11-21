@@ -113,7 +113,7 @@ class Tab extends CI_controller
 			}
 			else
 			{
-				$error = "Unable to fetch results at this point. ";
+				$error = $this->lang->line('common_error_general');
 				$data = array(
 					'error' => $error,
 					);
