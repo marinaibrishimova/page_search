@@ -39,11 +39,16 @@ class Tab extends CI_controller
 		$data['fb_id']= $fb_data['uid'];
 		$site_info = $this->facebook->api(''.$page_id.'?fields=website');
 		 
+		//the next 3 lines make sure we grab only 1 website in case they listed a few
+		//new FB page admin panel only allows one but previously many could be added
+		if(stripos($site_info['website'], ' ')) $data['website'] = stristr($site_info['website'], ' ', true);
+		else $data['website'] = $site_info['website'];  
+		if(stripos($data['website'], 'http') === false) $data['website'] = "http://".$data['website'];
+	 
 		if($page_id)
 		{	
 		    	$data['has_donate'] = ''; 
 		    	$data['name'] = '';
-		    	$data['website'] = $site_info['website'];
 			$this->load->view('create', $data); 			        				 
 		}
 		else
@@ -54,7 +59,7 @@ class Tab extends CI_controller
 					'page_id' => $page_id,
 					);
 			$this->load->view('tab_error', $data);
-		} 		
+		}		
 	 
 	}
 	
@@ -69,11 +74,12 @@ class Tab extends CI_controller
 		$data['method'] = htmlentities($this->input->post('method'), ENT_QUOTES, 'UTF-8');
 		$data['has_donate'] = htmlentities($this->input->post('has_donate'), ENT_QUOTES, 'UTF-8'); 
 		$data['name'] = htmlentities($this->input->post('name'), ENT_QUOTES, 'UTF-8');
-		$data['website'] = htmlentities($this->input->post('has_website'), ENT_QUOTES, 'UTF-8');
-	 
+		$data['with_web'] = htmlentities($this->input->post('has_website'), ENT_QUOTES, 'UTF-8');
+	 	$data['website'] = htmlentities($this->input->post('website'), ENT_QUOTES, 'UTF-8');
+	 	
 		if($page_id)
 		{
-			if(!empty($data['website']))
+			if(!empty($data['with_web']))
 			{
 				$web['results'] = ascraper($data['website'],$string);
 				if($web['results'])

@@ -54,7 +54,8 @@ $this->load->view("partial/header");?>
   	<option value=\"100\">Exclude comments</option>
   </select>"; 
   
-  if(!empty($website)){echo " <select name=\"has_website\" style=\"background:#FBEFEF;font-weight:bold;\"><option value=\"".$website."\">Search Page Website As Well</option><option value=\"\">Do Not Search Website</option></select>";}?>
+  if(!empty($website)){echo " <input type=\"hidden\" name=\"website\" value=".$website." /><select name=\"has_website\" style=\"background:#FBEFEF;font-weight:bold;\"><option value=\"\">Do Not Search Website</option>
+  <option value=\"1\">Search Page Website As Well</option></select>";}?>
   	
   	
 <?php echo form_close(); ?>

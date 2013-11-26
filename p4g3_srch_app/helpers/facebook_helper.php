@@ -148,8 +148,8 @@ function ascraper($website, $string)
 		{
 			$a_href = $a->getAttribute('href');
     			 
-    			//if(filter_var($a_href, FILTER_VALIDATE_URL) && !empty($a_href) && imap_base64($a_href))
-    			//{
+    			 if(!empty($a_href))
+    			 {
     				//assuming every link has the same relative path 
     				$page = file_get_contents($a_href);
     				$dom = new DOMDocument();
@@ -170,7 +170,7 @@ function ascraper($website, $string)
     						return $result;
     					}	
  				}
-    			//} 
+    			 } 
 		}
 
 		return false;

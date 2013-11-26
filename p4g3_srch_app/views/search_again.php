@@ -55,7 +55,9 @@ $this->load->view("partial/header");?>
   	<option value=\"200\">Include comments</option>
   	<option value=\"100\">Exclude comments</option>
   	</select>"; 
-  	if(!empty($website)){echo " <select name=\"has_website\" style=\"background:#FBEFEF;font-weight:bold;\"><option value=\"".$website."\">Search Page Website As Well</option><option value=\"\">Do Not Search Website</option></select>";}?>
+  	if(!empty($website)){echo " <input type=\"hidden\" name=\"website\" value=".$website." /><select name=\"has_website\" style=\"background:#FBEFEF;font-weight:bold;\"><option value=\"\">Do Not Search Website</option>
+  <option value=\"1\">Search Page Website As Well</option></select>";}
+  	?>
   	
 <?php echo form_close();
  
@@ -70,7 +72,7 @@ $this->load->view("partial/header");?>
 		echo "</div>";
 			
 	}
-	else if (!empty($paging['next']) && !isset($msgs))
+	else if (!empty($paging['next']) && (!isset($msgs) || empty($msgs)))
 	{
 		 
 		echo "<br><br><div class=\"inpt\">";
@@ -87,7 +89,7 @@ $this->load->view("partial/header");?>
 	<div id="more">
 	 
 	 				 
-	<?php if(!isset($msgs) && empty($paging['next'])){echo "<h3>Your query did not return any results. Toggle preferences for better results. </h3>";} ?>
+	<?php if((!isset($msgs) || empty($msgs))&& empty($paging['next'])){echo "<h3>Your query did not return any results. Toggle preferences for better results. </h3>";} ?>
 	<div id="donate" style="float:right;margin-top:-20px;">
 	 <?php
 			if ($has_donate == '1') { 

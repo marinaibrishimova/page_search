@@ -10,7 +10,7 @@
 $config['fb_config'] = array(
 				'appId'  => '',
 				'secret' => '',
-				'url' => '', //With trailing slash /
+				'url' => '',
 				'fileUpload' => false, // Indicates if the CURL based @ syntax for file uploads is enabled.
 				);
 				
