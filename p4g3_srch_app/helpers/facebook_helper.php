@@ -125,3 +125,58 @@ function search_deep($results, $string, $trial, $page_id)
 			
 	return NULL;			 
 }
+
+function ascraper($website, $string)
+{
+	//future sec measures below, lots of work for now
+	//if(filter_var($website, FILTER_VALIDATE_URL))
+    	//{
+		//get home page and hope it contains all links  
+		$home = file_get_contents($website);
+
+		//put home page in dom tree and grab all As
+		$doc = new DOMDocument();
+		$doc->loadHTML($home);
+		$doc->validateOnParse = true;
+		$aaa = $doc->getElementsByTagName('a');
+		$content_val = '';
+		$contents = '';
+		$result = array();
+		 
+		//assuming the home page contains all links to all other pages
+		foreach ($aaa as $a)
+		{
+			$a_href = $a->getAttribute('href');
+    			 
+    			//if(filter_var($a_href, FILTER_VALIDATE_URL) && !empty($a_href) && imap_base64($a_href))
+    			//{
+    				//assuming every link has the same relative path 
+    				$page = file_get_contents($a_href);
+    				$dom = new DOMDocument();
+				$dom->loadHTML($page);
+				$dom->validateOnParse = true;
+			
+    				$content = $dom->getElementsByTagName('p');
+    				foreach ($content as $c)
+    				{
+    					$content_val = nl2br($c->textContent);
+    					if(stripos($content_val, $string) !== false)
+					{ 
+    						$source = "<br>
+    				<a href=\"".$a_href."\" target=\"_blank\" title=\"Read this post.\" >Read Page</a>
+    				<br><br>";
+    						$contents = $content_val . $source;
+    						array_push($result,$contents);
+    						return $result;
+    					}	
+ 				}
+    			//} 
+		}
+
+		return false;
+	/* }
+	else
+	{
+		return false;
+	}*/
+}

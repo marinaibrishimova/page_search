@@ -52,13 +52,11 @@ $this->load->view("partial/header");?>
   <select name=\"limit\">
   	<option value=\"200\">Include comments</option>
   	<option value=\"100\">Exclude comments</option>
-  </select>
-<select name=\"method\">
-  <option value=\"exact\">Match exact phrase or word</option>
-   
-  </select>"; ?>
+  </select>"; 
   
-	
+  if(!empty($website)){echo " <select name=\"has_website\" style=\"background:#FBEFEF;font-weight:bold;\"><option value=\"".$website."\">Search Page Website As Well</option><option value=\"\">Do Not Search Website</option></select>";}?>
+  	
+  	
 <?php echo form_close(); ?>
 <div id="loading" style="display:none; position:absolute; height:20px; width:100%; top:100px; left:0px; text-align:center;">
    <p style="display:inline-block; margin:0px auto;"><img src="<?php echo base_url(); ?>images/loading.gif"/></p>

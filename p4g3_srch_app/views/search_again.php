@@ -54,12 +54,8 @@ $this->load->view("partial/header");?>
   	<select name=\"limit\">
   	<option value=\"200\">Include comments</option>
   	<option value=\"100\">Exclude comments</option>
-  	</select>
-
-  	<select name=\"method\">
-  	<option value=\"exact\">Match exact phrase or word</option>
-  	 
-  	</select>"; ?>
+  	</select>"; 
+  	if(!empty($website)){echo " <select name=\"has_website\" style=\"background:#FBEFEF;font-weight:bold;\"><option value=\"".$website."\">Search Page Website As Well</option><option value=\"\">Do Not Search Website</option></select>";}?>
   	
 <?php echo form_close();
  

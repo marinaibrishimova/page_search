@@ -64,7 +64,7 @@ $autoload['libraries'] = array('database','session','form_validation','user_agen
 |	$autoload['helper'] = array('url', 'file');
 */
 
-$autoload['helper'] = array('url', 'facebook', 'form', 'language', 'htmlpurifier');
+$autoload['helper'] = array('url', 'facebook', 'form', 'language');
 
 
 /*
@@ -109,7 +109,7 @@ $autoload['language'] = array('common', 'login');
 |
 */
 
-$autoload['model'] = array(Create, Facebook_model);
+$autoload['model'] = array('Facebook_model');
 
 
 /* End of file autoload.php */

@@ -37,13 +37,13 @@ class Tab extends CI_controller
 		$page_id = $data['id'] = $page['id'];
 		$liked = $page['liked'];		
 		$data['fb_id']= $fb_data['uid'];
-		$page_name = 'test';	
-	
+		$site_info = $this->facebook->api(''.$page_id.'?fields=website');
+		 
 		if($page_id)
 		{	
-		    $data['has_donate'] = ''; 
-		    $data['name'] = '';
- 
+		    	$data['has_donate'] = ''; 
+		    	$data['name'] = '';
+		    	$data['website'] = $site_info['website'];
 			$this->load->view('create', $data); 			        				 
 		}
 		else
@@ -54,7 +54,7 @@ class Tab extends CI_controller
 					'page_id' => $page_id,
 					);
 			$this->load->view('tab_error', $data);
-		}		
+		} 		
 	 
 	}
 	
@@ -69,10 +69,19 @@ class Tab extends CI_controller
 		$data['method'] = htmlentities($this->input->post('method'), ENT_QUOTES, 'UTF-8');
 		$data['has_donate'] = htmlentities($this->input->post('has_donate'), ENT_QUOTES, 'UTF-8'); 
 		$data['name'] = htmlentities($this->input->post('name'), ENT_QUOTES, 'UTF-8');
-	
+		$data['website'] = htmlentities($this->input->post('has_website'), ENT_QUOTES, 'UTF-8');
+	 
 		if($page_id)
 		{
-		       
+			if(!empty($data['website']))
+			{
+				$web['results'] = ascraper($data['website'],$string);
+				if($web['results'])
+		        	{
+		       			$data['msgs'] = implode($web['results']);			
+		        	}
+		        }
+		        
 		        $fb_config = $this->config->item('fb_config');
 		        $app_id = $fb_config['appId'];
 			$app_secret = $fb_config['secret'];
@@ -102,13 +111,12 @@ class Tab extends CI_controller
     		        
  		        	$msgs = search_deep($respon, $string, 1, $page_id);
 
-				$data['msgs'] = implode($msgs['result']);
+				$data['msgs'] = $data['msgs'] . implode($msgs['result']);
     				$data['string'] = $string;
-				$data['id'] = $page_id;
-   	    	        	$data['is_admin'] = $admin; 
+				$data['id'] = $page_id; 
 				$data['paging'] = $msgs['paging'];
 				$data['exactime'] = $exactime;
-			 
+
 				$this->load->view("search_again", $data);
 			}
 			else
@@ -135,8 +143,8 @@ class Tab extends CI_controller
 	{
           	 
           	$string = htmlentities($this->input->post('string'), ENT_QUOTES, 'UTF-8');
- 	  		$page_id = htmlentities($this->input->post('page_id'), ENT_QUOTES, 'UTF-8');
- 	  		$respon = filter_var($this->input->post('nextr'), FILTER_SANITIZE_URL);
+ 	  	$page_id = htmlentities($this->input->post('page_id'), ENT_QUOTES, 'UTF-8');
+ 	  	$respon = filter_var($this->input->post('nextr'), FILTER_SANITIZE_URL);
           	 		 
           	$br = search_deep($respon, $string, 1, $page_id);
           	$msgs['res'] = implode($br['result']);	
