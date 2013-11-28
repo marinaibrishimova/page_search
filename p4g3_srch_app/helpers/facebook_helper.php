@@ -138,18 +138,50 @@ function ascraper($website, $string)
 		$doc = new DOMDocument();
 		$doc->loadHTML($home);
 		$doc->validateOnParse = true;
-		$aaa = $doc->getElementsByTagName('a');
 		$content_val = '';
 		$contents = '';
 		$result = array();
+		$home_div = $doc->getElementsByTagName('p');
+    		foreach ($home_div as $div)
+    		{
+    			$div_val = nl2br($div->textContent);
+    			if(stripos($div_val, $string) !== false)
+			{ 
+    				$source = "
+    				<a href=\"".$website."\" target=\"_blank\" title=\"Read this post.\" >Read Page</a>
+    				<br><br>";
+    				$contents = $div_val . $source;
+    				array_push($result,$contents);
+    				return $result;
+    			}	
+ 		}
 		 
 		//assuming the home page contains all links to all other pages
+		$aaa = $doc->getElementsByTagName('a');
 		foreach ($aaa as $a)
 		{
 			$a_href = $a->getAttribute('href');
     			 
-    			 if(!empty($a_href))
+    			 if(stripos($a_href, $website) !== false)
     			 {
+    			 	$source = "<br>
+    				<a href=\"".$a_href."\" target=\"_blank\" title=\"Read this post.\" >Read Page</a>
+    				<br><br>";
+    			 }
+    			 else
+    			 {
+    			 	$abc = '';
+    			 	$link = '';
+    			 	if((strstr($a_href, '/') != false)&&(strstr($a_href, '.') != false))
+    			 	{ 
+    			 		$abc = str_replace('/', '3', $abc);
+    					$abc = str_replace('.', '7', $abc);
+    				}	 
+    				if(ctype_alnum($abc) && !empty($abc)) $link = $website.$a_href;
+    				if(filter_var($link, FILTER_VALIDATE_URL)) $source = $link;
+    				else $source = $website;
+    			 	
+    			 }
     				//assuming every link has the same relative path 
     				$page = file_get_contents($a_href);
     				$dom = new DOMDocument();
@@ -161,16 +193,13 @@ function ascraper($website, $string)
     				{
     					$content_val = nl2br($c->textContent);
     					if(stripos($content_val, $string) !== false)
-					{ 
-    						$source = "<br>
-    				<a href=\"".$a_href."\" target=\"_blank\" title=\"Read this post.\" >Read Page</a>
-    				<br><br>";
+					{
     						$contents = $content_val . $source;
     						array_push($result,$contents);
     						return $result;
     					}	
  				}
-    			 } 
+    			 
 		}
 
 		return false;
