@@ -128,48 +128,49 @@ function search_deep($results, $string, $trial, $page_id)
 
 function ascraper($website, $string)
 {
-	//future sec measures below, lots of work for now
-	//if(filter_var($website, FILTER_VALIDATE_URL))
-    	//{
-		//get home page and hope it contains all links  
+	 
+		//get home page and hope it contains string  
 		$home = file_get_contents($website);
-
-		//put home page in dom tree and grab all As
 		$doc = new DOMDocument();
 		$doc->loadHTML($home);
 		$doc->validateOnParse = true;
 		$content_val = '';
 		$contents = '';
 		$result = array();
-		$home_div = $doc->getElementsByTagName('p');
+		$home_div = $doc->getElementsByTagName('div');
     		foreach ($home_div as $div)
     		{
     			$div_val = nl2br($div->textContent);
-    			if(stripos($div_val, $string) !== false)
+    			$str_match = stripos($div_val, $string);
+    			if($str_match !== false)
 			{ 
     				$source = "
     				<a href=\"".$website."\" target=\"_blank\" title=\"Read this post.\" >Read Page</a>
     				<br><br>";
-    				$contents = $div_val . $source;
+    				$chunk = substr($div_val, $str_match, strlen($string));
+    				$contents = $chunk . $source;
     				array_push($result,$contents);
     				return $result;
-    			}	
+    			 
+    			}
+    			 	
  		}
-		 
+		//if home page doesn't contain string, then must go deeper 
 		//assuming the home page contains all links to all other pages
+		//put home page in dom tree and grab all As
 		$aaa = $doc->getElementsByTagName('a');
 		foreach ($aaa as $a)
 		{
 			$a_href = $a->getAttribute('href');
     			 
-    			 if(stripos($a_href, $website) !== false)
-    			 {
+    		if(stripos($a_href, $website) !== false)
+    		{
     			 	$source = "<br>
     				<a href=\"".$a_href."\" target=\"_blank\" title=\"Read this post.\" >Read Page</a>
     				<br><br>";
-    			 }
-    			 else
-    			 {
+    		}
+    		else
+    		{
     			 	$abc = '';
     			 	$link = '';
     			 	if((strstr($a_href, '/') != false)&&(strstr($a_href, '.') != false))
@@ -181,31 +182,28 @@ function ascraper($website, $string)
     				if(filter_var($link, FILTER_VALIDATE_URL)) $source = $link;
     				else $source = $website;
     			 	
-    			 }
-    				//assuming every link has the same relative path 
-    				$page = file_get_contents($a_href);
-    				$dom = new DOMDocument();
-				$dom->loadHTML($page);
-				$dom->validateOnParse = true;
+    		}
+    			 
+    		$page = file_get_contents($a_href);
+    		$dom = new DOMDocument();
+			$dom->loadHTML($page);
+			$dom->validateOnParse = true;
 			
-    				$content = $dom->getElementsByTagName('p');
-    				foreach ($content as $c)
-    				{
-    					$content_val = nl2br($c->textContent);
-    					if(stripos($content_val, $string) !== false)
+    		$content = $dom->getElementsByTagName('div');
+    		foreach ($content as $c)
+    		{
+    				$content_val = nl2br($c->textContent);
+    				$str_match = stripos($content_val, $string);
+    				if($str_match !== false)
 					{
-    						$contents = $content_val . $source;
+							$chunk = substr($content_val, $str_match, strlen($string));
+    						$contents = $chunk . $source;
     						array_push($result,$contents);
     						return $result;
-    					}	
- 				}
+    				}	
+ 			 }
     			 
 		}
 
 		return false;
-	/* }
-	else
-	{
-		return false;
-	}*/
 }
