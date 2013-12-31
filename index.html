@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Page search by marinaibrishimova</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Page search</h1>
+        <p>Page search tab for FB pages that can search a page's website if one is provided</p>
+
+        <p class="view"><a href="https://github.com/marinaibrishimova/page_search">View the Project on GitHub <small>marinaibrishimova/page_search</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/marinaibrishimova/page_search/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/marinaibrishimova/page_search/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/marinaibrishimova/page_search">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <p>To get started, you'll need to create an app on Facebook </p>
+
+<p>After this, you'll need to modify the following 2 files:</p>
+
+<pre><code>1.  p4g3_srch_app/config/config.php -&gt; specify base url
+2.  p4g3_srch_app/config/facebook.php -&gt; add your FB app credentials
+</code></pre>
+
+<p>That's it! You can optionally move p4g3_srch_app &amp; p4g3_srch_sys above the web root for bonus security but then you'll need to change the path to these 2 folders in public/index.php </p>
+
+<p>Note: This works well for pages with a small number of posts and it does not break for pages with tons of posts but since it only searches for a match within a particular timeframe, the user is required to keep pressing the Older Posts button until it either finds a match or it doesn't, in which case it will say so.   </p>
+
+<p>Also note: Currently there's no fancy "Did you mean" spellchecker but that could easily be modified by slapping a levenshtein() while searching recursively. </p>
+
+<p>The key controllers are: </p>
+
+<p>p4g3_srch_app/controllers/welcome.php   ---  canvas - default landing page</p>
+
+<p>p4g3_srch_app/controllers/tab.php       ---  tab - everything that goes after installing app to page</p>
+
+<p>Key models:</p>
+
+<p>this app doesn't talk to a database so no need for models, ye</p>
+
+<p>Key view files:</p>
+
+<p>p4g3_srch_app/views/welcome.php     --- landing canvas view
+p4g3_srch_app/views/create.php      --- landing tab view</p>
+
+<p>Key helper:</p>
+
+<p>p4g3_srch_app/helpers/facebook_helper.php --- where all search functions are at</p>
+
+<p>DEMO:
+<a href="https://apps.facebook.com/post-finder">canvas app demo</a>
+<a href="https://www.facebook.com/ibrius/app_384295561652134">page tab demo</a></p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/marinaibrishimova">marinaibrishimova</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
